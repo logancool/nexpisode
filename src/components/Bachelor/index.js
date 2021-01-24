@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 
 const Bachelor = () => {
-  const funs = 'test';
+  const [bachelor, setBachelor] = useState();
+  useEffect(() => {
 
+  }, [])
   return (
     <div>
-      {'test'}
+      Coming Soon.
     </div>
   )
 }
