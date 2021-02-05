@@ -57,22 +57,22 @@ const Bachelor = () => {
       }
     }
 
-    fetchJWTToken().then(token => {
-      fetchBachelorEpisode(token.data.token).then(episodeData => {
-        const lastAired = new Date(`${episodeData.data.lastAired}${PST_TIME}`).toISOString();
-        const remaining = ((dateFromISO8601(lastAired) - dateFromISO8601(today)) / 60000).toFixed(2);
-        if (lastAired > today) {
-          updateNexpisode(`${remaining} mins`);
-        }
-      });
-    })
+    // fetchJWTToken().then(token => {
+    //   fetchBachelorEpisode(token.data.token).then(episodeData => {
+    //     const lastAired = new Date(`${episodeData.data.lastAired}${PST_TIME}`).toISOString();
+    //     const remaining = ((dateFromISO8601(lastAired) - dateFromISO8601(today)) / 60000).toFixed(2);
+    //     if (lastAired > today) {
+    //       updateNexpisode(`${remaining} mins`);
+    //     }
+    //   });
+    // })
 
     const intervalID = setInterval(() => updateToday(new Date().toISOString()), 100);
     return () => clearInterval(intervalID);
 
   }, [updateNexpisode, today, nexpisode])
   return (
-    <div style={{ margin: '2rem', fontSize: '3rem', textAlign: 'center' }}>
+    <div className="bachelor">
       {nexpisode}
       <br />
       remaining...
