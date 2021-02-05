@@ -8,10 +8,12 @@
     "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
-  "proxy": "https://www.omdbapi.com/:3000",
+  "proxy": "https://api4.thetvdb.com",
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
