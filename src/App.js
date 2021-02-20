@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/bachelor">
-          {/* <Bachelor /> */}
+          <Bachelor />
         </Route>
       </Switch>
     </Router>
