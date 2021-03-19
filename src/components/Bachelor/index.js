@@ -24,11 +24,12 @@ const Bachelor = () => {
   useEffect(() => {
 
     const TVDB_API_KEY = process.env.REACT_APP_TVDB_API_KEY;
+    const TVDB_API_PIN = process.env.REACT_APP_TVDB_API_PIN;
     const TVDB_API_HOST = process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_TVDB_API_HOST;
 
     const data = {
       apikey: TVDB_API_KEY,
-      pin: 'string',
+      pin: TVDB_API_PIN,
     };
 
     const headers = {
