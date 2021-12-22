@@ -84,6 +84,9 @@ const App = () => {
 						remaining...
 					</div>
 				</Route>
+				<Route exact path="/">
+					<div className="episode">When is the next episode?</div>
+				</Route>
 			</Switch>
 		</Router>
 	);
