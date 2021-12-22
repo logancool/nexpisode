@@ -5,7 +5,6 @@ const TVDB_API_HOST =
 
 async function fetchEpisode(token, episode) {
 	try {
-		console.log(`trying to fetch ${episode} episode`);
 		const response = await fetch(`${TVDB_API_HOST}/v4/series/${episode}`, {
 			method: "GET",
 			headers: {
@@ -15,7 +14,7 @@ async function fetchEpisode(token, episode) {
 
 		return response.json();
 	} catch (err) {
-		console.log(`failure getting ${episode} episode`);
+		console.log(`failure fetching episode: ${episode}`);
 		throw new Error(err);
 	}
 }

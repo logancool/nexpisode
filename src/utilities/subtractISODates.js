@@ -11,11 +11,7 @@ const isoDateToCompare = (isoDate) => {
 	);
 };
 
-function subtractISODates(nextAiredISO, todayISO) {
-	return (
-		(isoDateToCompare(nextAiredISO) - isoDateToCompare(todayISO)) /
-		60000
-	).toFixed(2);
-}
+const subtractISODates = (nextAiredISO, todayISO) =>
+	isoDateToCompare(nextAiredISO) - isoDateToCompare(todayISO);
 
 export default subtractISODates;

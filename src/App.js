@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { toPST, PST } from "./utilities/parseDate";
+import {
+	PST,
+	toPST,
+	toSeconds,
+	toMins,
+	toHours,
+	toDays,
+} from "./utilities/parseDate";
 import subtractISODates from "./utilities/subtractISODates";
 import fetchEpisode from "./services/fetchEpisode";
 import fetchJWTToken from "./services/fetchJWTToken";
@@ -11,12 +18,12 @@ const episodeMap = {
 	bachelor: "70869?year=25",
 	grey: "",
 };
+const dateMap = [toSeconds, toMins, toHours, toDays];
 
 const App = () => {
 	const [episode, setEpisode] = useState(null);
 	const [nexpisode, updateNexpisode] = useState("¯\\_(ツ)_/¯");
-	// currently we're not using this
-	// eslint-disable-next-line no-unused-vars
+	const [dateIndex, updateDateIndex] = useState(0);
 	const [nextAired, updateNextAired] = useState({
 		iso: new Date().toISOString(),
 		pst: toPST(new Date()),
@@ -25,6 +32,11 @@ const App = () => {
 		iso: new Date().toISOString(),
 		pst: toPST(new Date()),
 	});
+
+	const changeDate = () => {
+		const nextDateIndex = (dateIndex + 1) % dateMap.length;
+		updateDateIndex(nextDateIndex);
+	};
 
 	// we're using two useEffect since we only need to make our fetch call once
 	// on request
@@ -38,7 +50,6 @@ const App = () => {
 
 		if (episode) {
 			fetchJWTToken().then((token) => {
-				console.log(episode);
 				fetchEpisode(token.data.token, episode).then((episodeData) => {
 					const nextAiredTVDBIso = new Date(
 						`${episodeData.data.lastAired}${PST}`,
@@ -53,29 +64,34 @@ const App = () => {
 	}, [episode]);
 
 	useEffect(() => {
-		const remaining = subtractISODates(nextAired.iso, today.iso);
+		const UTCRemaining = subtractISODates(nextAired.iso, today.iso);
 
-		if (remaining > 0) {
-			updateNexpisode(`${remaining} mins`);
+		if (UTCRemaining > 0) {
+			const remaining = dateMap[dateIndex](UTCRemaining);
+			updateNexpisode(
+				`${remaining.amount.toLocaleString("en-US", {
+					maximumFractionDigits: 0,
+				})} ${remaining.unit}`,
+			);
 		}
-
+		// cause a rerender every second
 		const intervalID = setInterval(
 			() => updateToday({ iso: new Date().toISOString(), pst: toPST(Date()) }),
 			1000,
 		);
 
 		return () => clearInterval(intervalID);
-	}, [nextAired, today]);
+	}, [nextAired, dateIndex, today]);
 
 	return (
 		<Router>
 			<Switch>
 				<Route exact path="/bachelor">
-					<div className="episode">
+					<button className="episode" onClick={changeDate}>
 						{nexpisode}
 						<br />
 						remaining...
-					</div>
+					</button>
 				</Route>
 				<Route exact path="/grey">
 					<div className="episode">

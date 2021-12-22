@@ -17,8 +17,6 @@ const headers = {
 
 async function fetchJWTToken() {
 	try {
-		console.log("trying to fetch jwt token");
-		console.log("TVDB_API_HOST >", TVDB_API_HOST);
 		const response = await fetch(`${TVDB_API_HOST}/v4/login`, {
 			method: "POST",
 			headers: headers,
@@ -27,7 +25,7 @@ async function fetchJWTToken() {
 
 		return response.json();
 	} catch (err) {
-		console.log("fetch JWT token error");
+		console.log("JWT token error");
 		throw new Error(err);
 	}
 }
