@@ -16,7 +16,7 @@ import "./App.css";
 // for the url as key what's the api query
 const episodeMap = {
 	bachelor: "70869?year=25",
-	grey: "",
+	bachelorette: "71187?year=18",
 };
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
@@ -93,7 +93,7 @@ const App = () => {
 						remaining...
 					</button>
 				</Route>
-				<Route exact path="/grey">
+				<Route exact path="/bachelorette" onClick={changeDate}>
 					<div className="episode">
 						{nexpisode}
 						<br />
