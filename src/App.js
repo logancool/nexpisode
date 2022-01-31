@@ -16,7 +16,9 @@ import "./App.css";
 // for the url as key what's the api query
 const episodeMap = {
 	bachelor: "70869?year=25",
-	bachelorette: "71187?year=18",
+	bachelorette: "71187?year=19",
+	southpark: '75897?year=25',
+	sp: '75897?year=25',
 };
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
@@ -51,13 +53,15 @@ const App = () => {
 		if (episode) {
 			fetchJWTToken().then((token) => {
 				fetchEpisode(token.data.token, episode).then((episodeData) => {
-					const nextAiredTVDBIso = new Date(
-						`${episodeData.data.lastAired}${PST}`,
-					).toISOString();
-					updateNextAired({
-						iso: nextAiredTVDBIso,
-						pst: toPST(new Date(nextAiredTVDBIso)),
-					});
+					if (episodeData.data.nextAired) {
+						const nextAiredTVDBIso = new Date(
+							`${episodeData.data.nextAired}${PST}`,
+						).toISOString();
+						updateNextAired({
+							iso: nextAiredTVDBIso,
+							pst: toPST(new Date(nextAiredTVDBIso)),
+						});
+					}
 				});
 			});
 		}
@@ -99,6 +103,20 @@ const App = () => {
 						<br />
 						remaining...
 					</div>
+				</Route>
+				<Route exact path="/sp">
+					<button className="episode" onClick={changeDate}>
+						{nexpisode}
+						<br />
+						remaining...
+					</button>
+				</Route>
+				<Route exact path="/south-park">
+					<button className="episode" onClick={changeDate}>
+						{nexpisode}
+						<br />
+						remaining...
+					</button>
 				</Route>
 				<Route exact path="/">
 					<div className="episode">When is the next episode?</div>
