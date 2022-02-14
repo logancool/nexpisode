@@ -8,18 +8,13 @@ import {
 	toHours,
 	toDays,
 } from "./utilities/parseDate";
+import ShowWrapper from "./ShowWrapper";
+import Home from "./Home";
+import episodeMap from './utilities/episodeMap';
 import subtractISODates from "./utilities/subtractISODates";
 import fetchEpisode from "./services/fetchEpisode";
 import fetchJWTToken from "./services/fetchJWTToken";
-import "./App.css";
 
-// for the url as key what's the api query
-const episodeMap = {
-	bachelor: "70869?year=25",
-	bachelorette: "71187?year=19",
-	southpark: '75897?year=25',
-	sp: '75897?year=25',
-};
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
 const App = () => {
@@ -91,35 +86,19 @@ const App = () => {
 		<Router>
 			<Switch>
 				<Route exact path="/bachelor">
-					<button className="episode" onClick={changeDate}>
-						{nexpisode}
-						<br />
-						remaining...
-					</button>
+					<ShowWrapper nexpisode={nexpisode} airDate={nextAired} changeDate={changeDate} />
 				</Route>
-				<Route exact path="/bachelorette" onClick={changeDate}>
-					<div className="episode">
-						{nexpisode}
-						<br />
-						remaining...
-					</div>
+					<Route exact path="/bachelorette" onClick={changeDate}>
+				<ShowWrapper nexpisode={nexpisode} airDate={nextAired} changeDate={changeDate} />
 				</Route>
 				<Route exact path="/sp">
-					<button className="episode" onClick={changeDate}>
-						{nexpisode}
-						<br />
-						remaining...
-					</button>
+					<ShowWrapper nexpisode={nexpisode} airDate={nextAired} changeDate={changeDate} />
 				</Route>
 				<Route exact path="/south-park">
-					<button className="episode" onClick={changeDate}>
-						{nexpisode}
-						<br />
-						remaining...
-					</button>
+					<ShowWrapper nexpisode={nexpisode} airDate={nextAired} changeDate={changeDate} />
 				</Route>
 				<Route exact path="/">
-					<div className="episode">When is the next episode?</div>
+					<Home />
 				</Route>
 			</Switch>
 		</Router>
