@@ -52,7 +52,7 @@ const ShowWrapper = () => {
 		if (episode) {
 			fetchJWTToken().then((token) => {
 				fetchEpisode(token.data.token, episode).then((episodeData) => {
-					if (episodeData.data.nextAired) {
+					if (episodeData.data?.nextAired) {
 						const nextAiredTVDBIso = new Date(
 							`${episodeData.data.nextAired}${PST}`,
 						).toISOString();
