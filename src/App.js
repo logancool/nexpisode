@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   PST,
   toPST,
@@ -84,53 +84,51 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/bachelor">
+      <Routes>
+        <Route path="/bachelor" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/kardashians">
+        } />
+        <Route path="/kardashians" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/bachelorette" onClick={changeDate}>
+        } />
+        <Route path="/bachelorette" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/sp">
+        } />
+        <Route path="/sp" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/st">
+        } />
+        <Route path="/st" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/south-park">
+        } />
+        <Route path="/south-park" element={
           <ShowWrapper
             nexpisode={nexpisode}
             airDate={nextAired}
             changeDate={changeDate}
           />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
+        } />
+        <Route path="/" element={<Home />} />
+      </Routes>
     </Router>
   );
 };
