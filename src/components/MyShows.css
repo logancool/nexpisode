@@ -1,0 +1,58 @@
+.my-shows {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+.my-shows h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.shows-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.show-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+.show-link {
+  text-decoration: underline;
+  color: #000;
+}
+
+.show-link:hover {
+  color: #00f;
+}
+
+.add-btn,
+.remove-btn {
+  font-size: 1rem;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #0f0;
+}
+
+.remove-btn:hover {
+  background-color: #f00;
+  color: #fff;
+}
+
+.my-shows-loading {
+  text-align: center;
+  font-size: 1.2rem;
+}

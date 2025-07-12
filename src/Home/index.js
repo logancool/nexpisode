@@ -1,4 +1,4 @@
-import "./index.css";
+import './index.css';
 
 const Home = () => (
   <div className="wrapper">
@@ -9,6 +9,7 @@ const Home = () => (
       <a href="/sp"> South Park</a>
       <a href="/st"> Stranger Things</a>
       <a href="/kardashians"> Keeping up with the Kardashians</a>
+      <a href="/my-shows"> My Shows</a>
     </div>
   </div>
 );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import './aws-config'; // Import AWS configuration
 import {
   PST,
   toPST,
@@ -10,6 +11,10 @@ import {
 } from "./utilities/parseDate";
 import ShowWrapper from "./ShowWrapper";
 import Home from "./Home";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import LoginForm from "./components/Auth/LoginForm";
+import UserProfile from "./components/Auth/UserProfile";
+import MyShows from "./components/MyShows";
 import episodeMap from "./utilities/episodeMap";
 import subtractISODates from "./utilities/subtractISODates";
 import fetchEpisode from "./services/fetchEpisode";
@@ -17,10 +22,12 @@ import fetchJWTToken from "./services/fetchJWTToken";
 
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
-const App = () => {
+// Main App Component
+const AppContent = () => {
   const [episode, setEpisode] = useState(null);
   const [nexpisode, updateNexpisode] = useState("¯\\_(ツ)_/¯");
   const [dateIndex, updateDateIndex] = useState(0);
+  const { user } = useAuth();
   const [nextAired, updateNextAired] = useState({
     iso: new Date().toISOString(),
     pst: toPST(new Date()),
@@ -84,52 +91,69 @@ const App = () => {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/bachelor" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/kardashians" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/bachelorette" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/sp" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/st" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/south-park" element={
-          <ShowWrapper
-            nexpisode={nexpisode}
-            airDate={nextAired}
-            changeDate={changeDate}
-          />
-        } />
-        <Route path="/" element={<Home />} />
-      </Routes>
+      <div className="app">
+        {/* Auth Section */}
+        <div className="auth-section">
+          {user ? <UserProfile /> : <LoginForm />}
+        </div>
+        
+        <Routes>
+          <Route path="/bachelor" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/kardashians" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/bachelorette" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/sp" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/st" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/south-park" element={
+            <ShowWrapper
+              nexpisode={nexpisode}
+              airDate={nextAired}
+              changeDate={changeDate}
+            />
+          } />
+          <Route path="/my-shows" element={<MyShows user={user} />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
     </Router>
+  );
+};
+
+// App wrapper with AuthProvider
+const App = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
