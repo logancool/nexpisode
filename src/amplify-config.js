@@ -8,19 +8,21 @@ const amplifyConfig = {
         oauth: {
           domain: process.env.REACT_APP_OAUTH_DOMAIN,
           scopes: ['openid', 'email', 'profile'],
-          redirectSignIn: process.env.REACT_APP_REDIRECT_SIGN_IN || 'http://localhost:3000/',
-          redirectSignOut: process.env.REACT_APP_REDIRECT_SIGN_OUT || 'http://localhost:3000/',
-          responseType: 'code'
-        }
-      }
-    }
+          redirectSignIn:
+            process.env.REACT_APP_REDIRECT_SIGN_IN || 'http://localhost:3000/',
+          redirectSignOut:
+            process.env.REACT_APP_REDIRECT_SIGN_OUT || 'http://localhost:3000/',
+          responseType: 'code',
+        },
+      },
+    },
   },
   Storage: {
     S3: {
       bucket: process.env.REACT_APP_S3_BUCKET,
-      region: process.env.REACT_APP_AWS_REGION
-    }
-  }
+      region: process.env.REACT_APP_AWS_REGION,
+    },
+  },
 };
 
 export default amplifyConfig;

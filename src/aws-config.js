@@ -13,26 +13,26 @@ const awsConfig = {
           scopes: ['email', 'openid', 'profile'],
           redirectSignIn: [process.env.REACT_APP_REDIRECT_SIGN_IN],
           redirectSignOut: [process.env.REACT_APP_REDIRECT_SIGN_OUT],
-          responseType: 'code'
+          responseType: 'code',
         },
         email: true,
-        username: false
-      }
-    }
+        username: false,
+      },
+    },
   },
   Storage: {
     S3: {
       bucket: process.env.REACT_APP_S3_BUCKET,
-      region: process.env.REACT_APP_AWS_REGION
-    }
+      region: process.env.REACT_APP_AWS_REGION,
+    },
   },
   API: {
     GraphQL: {
       endpoint: process.env.REACT_APP_GRAPHQL_ENDPOINT,
       region: process.env.REACT_APP_AWS_REGION,
-      defaultAuthMode: 'userPool'
-    }
-  }
+      defaultAuthMode: 'userPool',
+    },
+  },
 };
 
 // Configure Amplify

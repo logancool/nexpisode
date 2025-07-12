@@ -22,15 +22,15 @@ const UserProfile = () => {
         <p>Email: {user.signInDetails?.loginId || 'N/A'}</p>
         <p>User ID: {user.userId}</p>
       </div>
-      
-      <button 
-        onClick={handleLogout} 
+
+      <button
+        onClick={handleLogout}
         disabled={loading}
         className="logout-button"
       >
         {loading ? 'Signing out...' : 'Sign Out'}
       </button>
-      
+
       <style jsx>{`
         .user-profile {
           max-width: 400px;
@@ -40,21 +40,21 @@ const UserProfile = () => {
           border-radius: 8px;
           background-color: #f8f9fa;
         }
-        
+
         .user-info {
           margin-bottom: 1.5rem;
         }
-        
+
         .user-info h3 {
           margin: 0 0 1rem 0;
           color: #333;
         }
-        
+
         .user-info p {
           margin: 0.5rem 0;
           color: #666;
         }
-        
+
         .logout-button {
           width: 100%;
           padding: 0.75rem;
@@ -65,11 +65,11 @@ const UserProfile = () => {
           font-size: 1rem;
           cursor: pointer;
         }
-        
+
         .logout-button:hover:not(:disabled) {
           background-color: #c82333;
         }
-        
+
         .logout-button:disabled {
           background-color: #ccc;
           cursor: not-allowed;

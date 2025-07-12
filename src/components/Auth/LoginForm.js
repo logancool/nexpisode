@@ -9,11 +9,18 @@ const LoginForm = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [pendingEmail, setPendingEmail] = useState('');
 
-  const { login, register, confirmRegistration, resendConfirmation, loading, error } = useAuth();
+  const {
+    login,
+    register,
+    confirmRegistration,
+    resendConfirmation,
+    loading,
+    error,
+  } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (showConfirmation) {
       const result = await confirmRegistration(pendingEmail, confirmationCode);
       if (result.success) {
@@ -100,23 +107,23 @@ const LoginForm = () => {
           />
         </div>
         <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Sign In')}
+          {loading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Sign In'}
         </button>
       </form>
-      
+
       <p>
         {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-        <button 
-          type="button" 
+        <button
+          type="button"
           onClick={() => setIsSignUp(!isSignUp)}
           className="link-button"
         >
           {isSignUp ? 'Sign In' : 'Sign Up'}
         </button>
       </p>
-      
+
       {error && <p className="error">{error}</p>}
-      
+
       <style jsx>{`
         .auth-form {
           max-width: 400px;
@@ -125,17 +132,17 @@ const LoginForm = () => {
           border: 1px solid #ddd;
           border-radius: 8px;
         }
-        
+
         .auth-form div {
           margin-bottom: 1rem;
         }
-        
+
         .auth-form label {
           display: block;
           margin-bottom: 0.5rem;
           font-weight: bold;
         }
-        
+
         .auth-form input {
           width: 100%;
           padding: 0.5rem;
@@ -143,7 +150,7 @@ const LoginForm = () => {
           border-radius: 4px;
           font-size: 1rem;
         }
-        
+
         .auth-form button {
           width: 100%;
           padding: 0.75rem;
@@ -155,16 +162,16 @@ const LoginForm = () => {
           cursor: pointer;
           margin-bottom: 0.5rem;
         }
-        
+
         .auth-form button:hover:not(:disabled) {
           background-color: #0056b3;
         }
-        
+
         .auth-form button:disabled {
           background-color: #ccc;
           cursor: not-allowed;
         }
-        
+
         .link-button {
           background: none !important;
           border: none !important;
@@ -174,7 +181,7 @@ const LoginForm = () => {
           width: auto !important;
           padding: 0 !important;
         }
-        
+
         .error {
           color: #dc3545;
           margin-top: 1rem;

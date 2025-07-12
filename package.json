@@ -17,7 +17,7 @@
   "proxy": "https://api4.thetvdb.com",
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -26,7 +26,7 @@
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
     "type-check": "tsc --noEmit",
-    "pre-commit": "npm run type-check && npm run lint && npm run format"
+    "pre-commit": "pnpm run type-check && pnpm run lint && pnpm run format"
   },
   "eslintConfig": {
     "extends": [
