@@ -12,10 +12,8 @@ import ShowWrapper from './ShowWrapper';
 import Home from './Home';
 import Auth from './components/Auth';
 import MyShows from './components/MyShows';
-import episodeMap from './utilities/episodeMap';
 import subtractISODates from './utilities/subtractISODates';
-import fetchEpisode from './services/fetchEpisode';
-import fetchJWTToken from './services/fetchJWTToken';
+import { getShowWithLatestSeason } from './services/tvdbService';
 
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
@@ -38,32 +36,33 @@ const App = () => {
     updateDateIndex(nextDateIndex);
   };
 
-  // we're using two useEffect since we only need to make our fetch call once
-  // on request
   useEffect(() => {
-    // set the episode
-    const episodeString = window.location.pathname.replace(/\W/g, '');
-
-    if (episodeString) {
-      setEpisode(episodeMap[episodeString]);
-    }
-
-    if (episode) {
-      fetchJWTToken().then((token) => {
-        fetchEpisode(token.data.token, episode).then((episodeData) => {
-          if (episodeData.data.nextAired) {
+    const loadShowData = async () => {
+      const pathSegments = window.location.pathname.split('/');
+      const showId = pathSegments[1];
+      
+      if (showId && user && user.shows) {
+        const userShow = user.shows.find(show => 
+          show.id === showId || show.name.toLowerCase().replace(/\s+/g, '-') === showId
+        );
+        
+        if (userShow) {
+          const showData = await getShowWithLatestSeason(userShow.tvdbId);
+          if (showData && showData.nextAired) {
             const nextAiredTVDBIso = new Date(
-              `${episodeData.data.nextAired}${PST}`
+              `${showData.nextAired}${PST}`
             ).toISOString();
             updateNextAired({
               iso: nextAiredTVDBIso,
               pst: toPST(new Date(nextAiredTVDBIso)),
             });
           }
-        });
-      });
-    }
-  }, [episode]);
+        }
+      }
+    };
+    
+    loadShowData();
+  }, [user]);
 
   useEffect(() => {
     const UTCRemaining = subtractISODates(nextAired.iso, today.iso);
@@ -149,7 +148,14 @@ const App = () => {
             />
           }
         />
-        <Route path="/my-shows" element={<MyShows user={user} />} />
+        <Route path="/add-shows" element={<MyShows user={user} />} />
+        <Route path="/:showSlug" element={
+          <ShowWrapper
+            nexpisode={nexpisode}
+            airDate={nextAired}
+            changeDate={changeDate}
+          />
+        } />
         <Route path="/" element={<Home user={user} />} />
       </Routes>
     </Router>
