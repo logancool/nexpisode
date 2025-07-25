@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
@@ -89,66 +88,6 @@ const App = () => {
     <Router>
       <Auth onAuthChange={setUser} />
       <Routes>
-        <Route
-          path="/bachelor"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
-        <Route
-          path="/kardashians"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
-        <Route
-          path="/bachelorette"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
-        <Route
-          path="/sp"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
-        <Route
-          path="/st"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
-        <Route
-          path="/south-park"
-          element={
-            <ShowWrapper
-              nexpisode={nexpisode}
-              airDate={nextAired}
-              changeDate={changeDate}
-            />
-          }
-        />
         <Route path="/add-shows" element={<MyShows user={user} />} />
         <Route path="/:showSlug" element={
           <ShowWrapper
@@ -161,22 +100,6 @@ const App = () => {
       </Routes>
     </Router>
   );
-=======
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import ShowWrapper from "./ShowWrapper";
-import Home from "./Home";
-
-const App = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route exact path="/" element={<Home />} />
-				<Route path=":id" element={<ShowWrapper />} />
-			</Routes>
-		</BrowserRouter>
-	);
->>>>>>> de7054fd20e209b28a8cd6833c74ce6f8fa9f700
 };
 
 export default App;
