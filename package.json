@@ -2,7 +2,7 @@
   "name": "nexpisode",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://logancool.github.io/nexpisode",
+  "homepage": "https://logan.cool/nexpisode",
   "dependencies": {
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",

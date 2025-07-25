@@ -34,7 +34,7 @@ const Auth = ({ onAuthChange }) => {
 
   return (
     <div className="auth-container">
-      <a href="/" className="home-button">Home</a>
+      <a href="/nexpisode" className="home-button">Home</a>
       {user ? (
         <div className="auth-user">
           <span>Hello, {user.signInDetails?.loginId || 'User'}</span>

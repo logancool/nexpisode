@@ -38,15 +38,22 @@ const App = () => {
   useEffect(() => {
     const loadShowData = async () => {
       const pathSegments = window.location.pathname.split('/');
-      const showId = pathSegments[1];
+      const showId = pathSegments[2]; // Changed from [1] to [2] for /nexpisode/show-name
       
-      if (showId && user && user.shows) {
+      console.log('Loading show data for:', showId, 'User:', user);
+      
+      if (showId && showId !== 'add-shows' && user && user.shows) {
         const userShow = user.shows.find(show => 
-          show.id === showId || show.name.toLowerCase().replace(/\s+/g, '-') === showId
+          show.id === showId || show.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === showId
         );
         
+        console.log('Found user show:', userShow);
+        
         if (userShow) {
+          console.log('Fetching TVDB data for:', userShow.tvdbId);
           const showData = await getShowWithLatestSeason(userShow.tvdbId);
+          console.log('TVDB response:', showData);
+          
           if (showData && showData.nextAired) {
             const nextAiredTVDBIso = new Date(
               `${showData.nextAired}${PST}`
@@ -61,7 +68,7 @@ const App = () => {
     };
     
     loadShowData();
-  }, [user]);
+  }, [user, window.location.pathname]);
 
   useEffect(() => {
     const UTCRemaining = subtractISODates(nextAired.iso, today.iso);
@@ -84,7 +91,7 @@ const App = () => {
   }, [nextAired, dateIndex, today]);
 
   return (
-    <Router>
+    <Router basename="/nexpisode" future={{ v7_startTransition: true }}>
       <Auth onAuthChange={setUser} />
       <Routes>
         <Route path="/add-shows" element={<MyShows user={user} />} />

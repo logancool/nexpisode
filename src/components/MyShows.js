@@ -79,7 +79,7 @@ const MyShows = ({ user }) => {
             return (
               <div key={show.id} className="show-item">
                 <div className="show-info">
-                  <a href={`/${showSlug}`} className="show-link">
+                  <a href={`/nexpisode/${showSlug}`} className="show-link">
                     <strong>{show.name}</strong>
                   </a>
                   {show.year && <span> ({show.year})</span>}
