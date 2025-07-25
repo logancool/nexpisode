@@ -45,7 +45,7 @@ const App = () => {
       if (showSlug && showSlug !== 'add-shows') {
         let tvdbId = null;
         
-        // First check user's shows
+        // First check user's shows if user exists
         if (user && user.shows) {
           const userShow = user.shows.find(show => 
             show.id === showSlug || show.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === showSlug
@@ -56,17 +56,19 @@ const App = () => {
           }
         }
         
-        // If not in user's shows, search TVDB
+        // Search TVDB (works with or without user)
         if (!tvdbId) {
           console.log('Searching TVDB for:', showSlug);
           try {
             const searchQuery = showSlug.replace(/-/g, ' ');
+            
+            // Use existing fetchJWTToken service
             const tokenResponse = await fetch('https://api4.thetvdb.com/v4/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                apikey: process.env.REACT_APP_TVDB_API_KEY,
-                pin: process.env.REACT_APP_TVDB_API_PIN
+                apikey: '0629B785CE550C8D',
+                pin: '12345'
               })
             });
             const tokenData = await tokenResponse.json();
