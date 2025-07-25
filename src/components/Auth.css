@@ -3,6 +3,10 @@
   top: 20px;
   right: 20px;
   font-size: 1rem;
+  z-index: 1000;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #000;
 }
 
 .auth-button {

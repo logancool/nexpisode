@@ -1,95 +1,91 @@
-# Getting Started with Create React App
+# Nexpisode - TV Show Episode Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and uses [pnpm](https://pnpm.io/) for package management.
+A retro-styled web app for tracking when your favorite TV shows air next episodes. Features Google authentication and personal show lists.
+
+## Features
+
+- 🕰️ **Episode Countdown** - See exactly when the next episode airs
+- 🔍 **TVDB Search** - Search and add any TV show from TheTVDB
+- 👤 **Google Sign-in** - Secure authentication with Google
+- 📝 **Personal Lists** - Save and manage your favorite shows
+- 🎨 **Retro Design** - Clean, Craigslist-inspired interface
 
 ## Prerequisites
 
 - Node.js (v16 or higher)
-- pnpm (install with `npm install -g pnpm`)
+- yarn or npm
 
 ## Available Scripts
 
-In the project directory, you can run:
+### `yarn start` or `npm start`
 
-### `pnpm start`
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `yarn build` or `npm run build`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Builds the app for production to the `build` folder.
 
-### `pnpm test`
+### `yarn deploy` or `npm run deploy`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Deploys to GitHub Pages (if configured).
 
-### `pnpm run build`
+## Environment Variables
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-### `pnpm run lint`
-
-Runs ESLint to check for code quality issues and potential bugs.
-
-### `pnpm run lint:fix`
-
-Runs ESLint with automatic fixing of fixable issues.
-
-### `pnpm run format`
-
-Formats code using Prettier for consistent code style.
-
-### `pnpm run type-check`
-
-Runs TypeScript compiler to check for type errors without emitting files.
-
-### `pnpm run pre-commit`
-
-Runs the complete pre-commit workflow: type-check, lint, and format.
-Use this before committing changes to ensure code quality.
-
-## AWS Cognito Authentication
-
-This app includes AWS Cognito authentication with:
-- User registration and email verification
-- Secure login/logout
-- Password requirements (8+ characters, uppercase, lowercase, numbers)
-- Integration with AWS services
-
-### Environment Variables
-
-Make sure to set up your `.env` file with the following variables:
+Create a `.env` file with:
 ```
+# TVDB API (required)
+REACT_APP_TVDB_API_KEY=your-tvdb-api-key
+REACT_APP_TVDB_API_PIN=your-tvdb-pin
+
+# AWS (optional - for real Google OAuth)
 REACT_APP_USER_POOL_ID=your-user-pool-id
 REACT_APP_USER_POOL_CLIENT_ID=your-client-id
-REACT_APP_IDENTITY_POOL_ID=your-identity-pool-id
 REACT_APP_AWS_REGION=us-east-1
 ```
 
-## Development Workflow
+## Quick Start
 
-1. **Install dependencies**: `pnpm install`
-2. **Start development**: `pnpm start`
-3. **Before committing**: `pnpm run pre-commit`
-4. **Build for production**: `pnpm run build`
+1. **Install**: `yarn install`
+2. **Start**: `yarn start`
+3. **Sign in**: Click "Sign in with Google" (mock auth for testing)
+4. **Add shows**: Search TVDB and add to your list
 
-## Why pnpm?
+## Deployment Options
 
-This project uses pnpm instead of npm for:
-- **Faster installations** - Up to 2x faster than npm
-- **Disk space efficiency** - Shared dependencies across projects
-- **Strict dependency resolution** - Better security and reliability
-- **Monorepo support** - Better for scaling
+### GitHub Pages (Free)
+```bash
+yarn build
+yarn deploy
+```
 
-## Learn More
+### Netlify (Free)
+1. Connect your GitHub repo to Netlify
+2. Build command: `yarn build`
+3. Publish directory: `build`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Vercel (Free)
+```bash
+npm i -g vercel
+vercel
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### AWS Amplify (Free Tier)
+1. Go to AWS Amplify Console
+2. Connect GitHub repo
+3. Auto-deploys on push
 
-To learn more about pnpm, check out the [pnpm documentation](https://pnpm.io/).
+## Tech Stack
+
+- **React 18** - Modern React with hooks
+- **React Router v6** - Client-side routing
+- **AWS Amplify** - Authentication & storage
+- **TVDB API** - TV show data
+- **CSS** - Retro styling inspired by Craigslist
+
+## Contributing
+
+1. Fork the repo
+2. Create feature branch
+3. Make changes
+4. Test locally
+5. Submit PR

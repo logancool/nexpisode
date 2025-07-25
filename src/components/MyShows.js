@@ -4,19 +4,8 @@ import {
   addShowToList,
   removeShowFromList,
 } from '../services/showService';
+import ShowSearch from './ShowSearch';
 import './MyShows.css';
-
-const availableShows = [
-  { id: 'bachelor', name: 'The Bachelor', tvdbId: '70869' },
-  { id: 'bachelorette', name: 'The Bachelorette', tvdbId: '71187' },
-  { id: 'sp', name: 'South Park', tvdbId: '75897' },
-  { id: 'st', name: 'Stranger Things', tvdbId: '305288' },
-  {
-    id: 'kardashians',
-    name: 'Keeping Up with the Kardashians',
-    tvdbId: '80725',
-  },
-];
 
 const MyShows = ({ user }) => {
   const [myShows, setMyShows] = useState([]);
@@ -26,9 +15,10 @@ const MyShows = ({ user }) => {
     const loadUserShows = async () => {
       try {
         const shows = await getUserShows(user.userId);
-        setMyShows(shows);
+        setMyShows(shows || []);
       } catch (error) {
         console.error('Error loading shows:', error);
+        setMyShows([]);
       } finally {
         setLoading(false);
       }
@@ -40,11 +30,17 @@ const MyShows = ({ user }) => {
   }, [user]);
 
   const addShow = async (show) => {
+    if (myShows.some((s) => s.id === show.id)) {
+      alert('Show already in your list!');
+      return;
+    }
+
     try {
       await addShowToList(user.userId, show);
       setMyShows([...myShows, show]);
     } catch (error) {
       console.error('Error adding show:', error);
+      setMyShows([...myShows, show]);
     }
   };
 
@@ -54,10 +50,9 @@ const MyShows = ({ user }) => {
       setMyShows(myShows.filter((show) => show.id !== showId));
     } catch (error) {
       console.error('Error removing show:', error);
+      setMyShows(myShows.filter((show) => show.id !== showId));
     }
   };
-
-  const isShowAdded = (showId) => myShows.some((show) => show.id === showId);
 
   if (!user) return null;
   if (loading)
@@ -66,27 +61,31 @@ const MyShows = ({ user }) => {
   return (
     <div className="my-shows">
       <h2>My Shows</h2>
-      <div className="shows-grid">
-        {availableShows.map((show) => (
-          <div key={show.id} className="show-item">
-            <a href={`/${show.id}`} className="show-link">
-              {show.name}
-            </a>
-            {isShowAdded(show.id) ? (
+
+      <ShowSearch onAddShow={addShow} />
+
+      {myShows.length === 0 ? (
+        <div className="no-shows">
+          No shows added yet. Search and add some above!
+        </div>
+      ) : (
+        <div className="shows-grid">
+          {myShows.map((show) => (
+            <div key={show.id} className="show-item">
+              <div className="show-info">
+                <strong>{show.name}</strong>
+                {show.year && <span> ({show.year})</span>}
+              </div>
               <button
                 onClick={() => removeShow(show.id)}
                 className="remove-btn"
               >
                 Remove
               </button>
-            ) : (
-              <button onClick={() => addShow(show)} className="add-btn">
-                Add
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
