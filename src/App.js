@@ -38,20 +38,57 @@ const App = () => {
   useEffect(() => {
     const loadShowData = async () => {
       const pathSegments = window.location.pathname.split('/');
-      const showId = pathSegments[2]; // Changed from [1] to [2] for /nexpisode/show-name
+      const showSlug = pathSegments[2];
       
-      console.log('Loading show data for:', showId, 'User:', user);
+      console.log('Loading show data for:', showSlug);
       
-      if (showId && showId !== 'add-shows' && user && user.shows) {
-        const userShow = user.shows.find(show => 
-          show.id === showId || show.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === showId
-        );
+      if (showSlug && showSlug !== 'add-shows') {
+        let tvdbId = null;
         
-        console.log('Found user show:', userShow);
+        // First check user's shows
+        if (user && user.shows) {
+          const userShow = user.shows.find(show => 
+            show.id === showSlug || show.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === showSlug
+          );
+          if (userShow) {
+            tvdbId = userShow.tvdbId;
+            console.log('Found in user shows:', userShow);
+          }
+        }
         
-        if (userShow) {
-          console.log('Fetching TVDB data for:', userShow.tvdbId);
-          const showData = await getShowWithLatestSeason(userShow.tvdbId);
+        // If not in user's shows, search TVDB
+        if (!tvdbId) {
+          console.log('Searching TVDB for:', showSlug);
+          try {
+            const searchQuery = showSlug.replace(/-/g, ' ');
+            const tokenResponse = await fetch('https://api4.thetvdb.com/v4/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                apikey: process.env.REACT_APP_TVDB_API_KEY,
+                pin: process.env.REACT_APP_TVDB_API_PIN
+              })
+            });
+            const tokenData = await tokenResponse.json();
+            
+            const searchResponse = await fetch(`https://api4.thetvdb.com/v4/search?query=${encodeURIComponent(searchQuery)}&type=series`, {
+              headers: { 'Authorization': `Bearer ${tokenData.data.token}` }
+            });
+            const searchData = await searchResponse.json();
+            
+            if (searchData.data && searchData.data.length > 0) {
+              tvdbId = searchData.data[0].tvdb_id;
+              console.log('Found via search:', searchData.data[0]);
+            }
+          } catch (error) {
+            console.error('Search error:', error);
+          }
+        }
+        
+        // Load show data if we have a tvdbId
+        if (tvdbId) {
+          console.log('Fetching TVDB data for:', tvdbId);
+          const showData = await getShowWithLatestSeason(tvdbId);
           console.log('TVDB response:', showData);
           
           if (showData && showData.nextAired) {
