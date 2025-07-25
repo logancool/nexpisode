@@ -16,7 +16,7 @@
   },
   "proxy": "https://api4.thetvdb.com",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "start": "react-scripts start",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",

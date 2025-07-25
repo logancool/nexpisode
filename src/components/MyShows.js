@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import {
-  getUserShows,
   addShowToList,
   removeShowFromList,
 } from '../services/showService';

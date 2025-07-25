@@ -18,7 +18,6 @@ import { getShowWithLatestSeason } from './services/tvdbService';
 const dateMap = [toSeconds, toMins, toHours, toDays];
 
 const App = () => {
-  const [episode, setEpisode] = useState(null);
   const [nexpisode, updateNexpisode] = useState('¯\\_(ツ)_/¯');
   const [dateIndex, updateDateIndex] = useState(0);
   const [user, setUser] = useState(null);
